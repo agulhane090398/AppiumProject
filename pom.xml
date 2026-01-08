@@ -10,9 +10,10 @@
   <name>AppiumProject</name>
   <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>17</maven.compiler.release>
+    </properties>
 
   <dependencies>
     <dependency>
@@ -37,9 +38,15 @@
       </dependency>
       <dependency>
           <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-chrome-driver</artifactId>
+          <artifactId>selenium-java</artifactId>
           <version>4.38.0</version>
       </dependency>
+
+      <!--      <dependency>-->
+<!--          <groupId>org.seleniumhq.selenium</groupId>-->
+<!--          <artifactId>selenium-chrome-driver</artifactId>-->
+<!--          <version>4.38.0</version>-->
+<!--      </dependency>-->
       <!-- TestNG -->
       <dependency>
           <groupId>org.testng</groupId>
@@ -55,5 +62,48 @@
           <version>5.4.0</version>
           <scope>test</scope>
       </dependency>
+
+<!--      <dependency>-->
+<!--          <groupId>io.github.bonigarcia</groupId>-->
+<!--          <artifactId>webdrivermanager</artifactId>-->
+<!--          <version>5.8.0</version> &lt;!&ndash; Use the latest version &ndash;&gt;-->
+<!--          <scope>test</scope>-->
+<!--      </dependency>-->
+      <dependency>
+          <groupId>com.aventstack</groupId>
+          <artifactId>extentreports</artifactId>
+          <version>5.0.9</version> <!-- Use the latest version from Maven Repository -->
+          <scope>test</scope>
+      </dependency>
+
   </dependencies>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.9.0</version> <!-- Use the latest version -->
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependencies</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
