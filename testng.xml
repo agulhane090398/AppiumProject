@@ -6,7 +6,7 @@
 
     <test name="TestNG Tests">
         <classes>
-<!--            <class name="Tests.YouTubeAutomation"/> //not working-->
+            <class name="Tests.YouTubeAutomation"/>
             <class name="Tests.SampleTest"/>
         </classes>
     </test>

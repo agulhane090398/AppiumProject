@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
         @Test
         public void failingTest() {
-            Assert.assertTrue(false);
+            Assert.assertFalse(false);
         }
     }
 

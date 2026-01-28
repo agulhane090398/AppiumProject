@@ -1,4 +1,5 @@
 package Tests;
+
 import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
@@ -22,12 +23,12 @@ import static java.time.Duration.ofSeconds;
 
 public class YouTubeAutomation {
 
-    public static void waitUntilElementIsClickable(WebDriver driver, WebElement element) {
+    public static void waitUntilElementIsClickable(WebDriver driver, By element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        try{
-            wait.until(ExpectedConditions.elementToBeClickable(element));
-        }catch(Exception e){
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(element));
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -36,6 +37,7 @@ public class YouTubeAutomation {
         Thread.sleep(duration.toMillis());
 
     }
+
     public static void scrollUntilElementIsDisplayed(WebDriver driver, WebElement element) {
         Dimension size = driver.manage().window().getSize();
         int startY = (int) (size.height * 0.80); // Start near the bottom
@@ -50,8 +52,9 @@ public class YouTubeAutomation {
                     .perform();
         }
     }
-    public static void main(String[] args) throws MalformedURLException, InterruptedException {
 
+    @Test
+    public static void YoutubeRun() throws MalformedURLException, InterruptedException {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "Android");
         caps.setCapability("appium:deviceName", "Medium Phone");
@@ -60,25 +63,57 @@ public class YouTubeAutomation {
         caps.setCapability("appium:automationName", "uiautomator2");
 
 
-        AndroidDriver driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),caps);
+        WebDriver driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), caps);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         try {
             if (driver.findElement(By.id("com.android.permissioncontroller:id/permission_allow_button")).isDisplayed()) {
                 driver.findElement(By.id("com.android.permissioncontroller:id/permission_allow_button")).click();
             }
-        }catch(Exception e) {
-            System.out.println( e.getMessage() );
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        WebElement searchBox = driver.findElement(By.xpath("//*[@content-desc='Search YouTube']"));
-        waitUntilElementIsClickable(driver,searchBox);
-        searchBox.click();
+        By searchBox = By.xpath("//*[@content-desc='Search YouTube']");
+        waitUntilElementIsClickable(driver, searchBox);
+        driver.findElement(searchBox).click();
         driver.findElement(By.id("com.google.android.youtube:id/search_edit_text")).sendKeys("Pokemon");
         driver.findElement(By.xpath("//*[@resource-id=\"com.google.android.youtube:id/search_type_icon\"]")).click();
+        waitUntilElementIsClickable(driver, By.xpath("//*[contains(@content-desc, \"Pokémon: Diamond and Pearl\")]"));
         WebElement selectVideo = driver.findElement(By.xpath("//*[contains(@content-desc, \"Pokémon: Diamond and Pearl\")]"));
-        waitUntilElementIsClickable(driver,selectVideo);
-        scrollUntilElementIsDisplayed(driver,selectVideo);
+        scrollUntilElementIsDisplayed(driver, selectVideo);
         selectVideo.click();
         threadSleep(Duration.ofSeconds(10));
         driver.quit();
+    }
+
+    public static void main(String[] args) {
+
+//        DesiredCapabilities caps = new DesiredCapabilities();
+//        caps.setCapability("platformName", "Android");
+//        caps.setCapability("appium:deviceName", "Medium Phone");
+//        caps.setCapability("appium:appPackage", "com.google.android.youtube");
+//        caps.setCapability("appium:appActivity", "com.google.android.youtube.HomeActivity");
+//        caps.setCapability("appium:automationName", "uiautomator2");
+//
+//
+//        AndroidDriver driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),caps);
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        try {
+//            if (driver.findElement(By.id("com.android.permissioncontroller:id/permission_allow_button")).isDisplayed()) {
+//                driver.findElement(By.id("com.android.permissioncontroller:id/permission_allow_button")).click();
+//            }
+//        }catch(Exception e) {
+//            System.out.println( e.getMessage() );
+//        }
+//        WebElement searchBox = driver.findElement(By.xpath("//*[@content-desc='Search YouTube']"));
+//        waitUntilElementIsClickable(driver,searchBox);
+//        searchBox.click();
+//        driver.findElement(By.id("com.google.android.youtube:id/search_edit_text")).sendKeys("Pokemon");
+//        driver.findElement(By.xpath("//*[@resource-id=\"com.google.android.youtube:id/search_type_icon\"]")).click();
+//        WebElement selectVideo = driver.findElement(By.xpath("//*[contains(@content-desc, \"Pokémon: Diamond and Pearl\")]"));
+//        waitUntilElementIsClickable(driver,selectVideo);
+//        scrollUntilElementIsDisplayed(driver,selectVideo);
+//        selectVideo.click();
+//        threadSleep(Duration.ofSeconds(10));
+//        driver.quit();
     }
 }
